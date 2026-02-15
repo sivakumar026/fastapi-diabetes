@@ -7,14 +7,14 @@ import numpy as np
 # Create FastAPI app
 app = FastAPI()
 
-# Enable CORS so your HTML front-end can access this API
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (for testing)
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# # Enable CORS so your HTML front-end can access this API
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # Allow all origins (for testing)
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 # Define the input model
 class ModelInput(BaseModel):
