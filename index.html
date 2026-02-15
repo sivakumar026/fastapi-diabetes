@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diabetes Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px auto;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Diabetes Prediction Form</h2>
+
+<form id="diabetesForm">
+    <label>Pregnancies</label>
+    <input type="number" id="Pregnancies" required>
+
+    <label>Glucose</label>
+    <input type="number" id="Glucose" required>
+
+    <label>Blood Pressure</label>
+    <input type="number" id="BloodPressure" required>
+
+    <label>Skin Thickness</label>
+    <input type="number" id="SkinThickness" required>
+
+    <label>Insulin</label>
+    <input type="number" id="Insulin" required>
+
+    <label>BMI</label>
+    <input type="number" step="0.1" id="BMI" required>
+
+    <label>Diabetes Pedigree Function</label>
+    <input type="number" step="0.001" id="DiabetesPedigreeFunction" required>
+
+    <label>Age</label>
+    <input type="number" id="Age" required>
+
+    <button type="submit">Predict</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+document.getElementById("diabetesForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const data = {
+        Pregnancies: Number(Pregnancies.value),
+        Glucose: Number(Glucose.value),
+        BloodPressure: Number(BloodPressure.value),
+        SkinThickness: Number(SkinThickness.value),
+        Insulin: Number(Insulin.value),
+        BMI: Number(BMI.value),
+        DiabetesPedigreeFunction: Number(DiabetesPedigreeFunction.value),
+        Age: Number(Age.value)
+    };
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/diabetes_prediction", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        document.getElementById("result").innerText = result.result;
+
+    } catch (error) {
+        document.getElementById("result").innerText =
+            "❌ Could not connect to API";
+        console.error(error);
+    }
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+<!-- 72	35	0	33.6	0.627	50	1
+1	1	85	66	29	0	26.6	0.351	31	0
+2	8	183	64	0	0	23.3	0.672	32	1
+3	1	89	66	23	94	28.1	0.167	21	0
+4	0	137	40	35	168	43.1	2.288	33	1 -->
+
+
+
