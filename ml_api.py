@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pickle
 import numpy as np
+from fastapi.responses import HTMLResponse
 
 # Create FastAPI app
 app = FastAPI()
@@ -26,6 +27,10 @@ class ModelInput(BaseModel):
     BMI: float
     DiabetesPedigreeFunction: float
     Age: int
+
+@app.get("/", response_class=HTMLResponse)
+def home():
+    return open("index.html").read()
 
 # Load your trained model and scaler
 diabetes_model = pickle.load(open("model.sav", "rb"))
